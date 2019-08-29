@@ -8,7 +8,7 @@ from pimouse.msg import LightSensorValues
 class LightsensorTest(unittest,TestCase):
 	def	setUp(self):
 		self.count = 0
-		rospy.Subscriber('/lightsensors',LightSensorValues,self.callback)
+		rospy.Subscriber('/lightsensors', LightSensorValues, self.callback)
 		self.values = LightSensorsValue()
 
 	def	callback(self,data):
@@ -20,7 +20,7 @@ class LightsensorTest(unittest,TestCase):
 		self.assertEqual(vs.left_forward, lf, "different value: left_forward")
 		self.assertEqual(vs.left_side, ls, "different value: left_side")
 		self.assertEqual(vs.right_side, rs, "different value: right_side")
-		self.assertEqual(vs.right_forward. lf, "different value: right_side")
+		self.assertEqual(vs.right_forward, lf, "different value: right_side")
 		self.assertEqual(vs.sum_all, lf+ls+rs+rf, "different value: sum_all")
 		self.assertEqual(vs.sum_forward, lf+rf, "different value: sum_forward")
 
