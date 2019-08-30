@@ -16,4 +16,20 @@ class Motor():
 
 	def	set_power(self,onoff=False):
 		en = "/dev/rtmotoren0"
-		
+		try:
+			with open(en,'w') as f:
+				f.write("1\n" if onoff else "0\n")
+			self.is_on = onoff
+			return True
+		except:
+			rospy.logerr("cannot write to " + en)
+
+		return False
+
+	def	set_raw_freq(self,left_hz,ruggt_hz):
+		if not self.is_on:
+			rospy.logerr("bit enpowerd")
+			return
+
+		try:
+			with open
