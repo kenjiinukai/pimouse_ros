@@ -52,6 +52,12 @@ class Motor():
 		self.using_cmd_vel = True
 		self.last_time = rospy.Time.now()
 
+	def	onoff_response(self,onoff):
+			d = TriggerResponse()
+			d.success = self.set_power(onoff)
+			d.message = "ON" if self.is_on else "OFF"
+			return d
+
 if __name__ == '__main__':
 	rospy.init_node('motors')
 	m = Motor()

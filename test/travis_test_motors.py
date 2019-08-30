@@ -20,7 +20,7 @@ class MotorTest(unittest.TestCase):
 		m = MotorFreqs()
 		m.left_hz = 123
 		m.right_hz = 456
-		for i in range(10)
+		for i in range(10):
 			pub.publish(m)
 			time.sleep(0.1)
 
