@@ -2,7 +2,7 @@
 #encoding: utf8
 import sys, rospy, math
 from pimouse_ros.msg import MotorFreqs
-from geometry_msg.msg import Twist
+from geometry_msgs.msg import Twist
 
 class Motor():
 	def	__init__(self):
@@ -26,7 +26,7 @@ class Motor():
 
 		return False
 
-	def	set_raw_freq(self,left_hz,ruggt_hz):
+	def	set_raw_freq(self,left_hz,right_hz):
 		if not self.is_on:
 			rospy.logerr("bit enpowerd")
 			return
@@ -39,4 +39,24 @@ class Motor():
 		except:
 			rospy.logerr("cannot write to rtmotor_raw_*")
 
-	def
+	def	callback_raw_freq(self,message):
+		self.set_raw_freq(message.left_hz,message.right_hz)
+
+	def	callback_cmd_vel(self,message):
+		forward_hz = 8000.0*message.angular.z/math.pi
+		rot_hz = 400.0*message.angular.z/math.pi
+		self.set_raw_freq(forward_hz - rot_hz, forward_hz + rot_hz)
+		self.using_cmd_vel = True
+		self.last_time = rospy.Time.now()
+
+if __name__ == '__main__':
+	rospy.init_node('motors')
+	m = Motor()
+
+	rate = rospy.Rate(10)
+	while not rospy.is_shutdown():
+		if m.using_cmd_vel and rospy.Time.now().to_sec() - m.last_time.to_sec >= 1.0:
+			m.set_raw_freq(0,0)
+			m.using_cmd_vel = False
+		rate.sleep()
+
