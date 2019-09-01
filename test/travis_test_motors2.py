@@ -56,7 +56,7 @@ class MotorTest(unittest.TestCase):
 		ret = off()
 		self.assertEqual(ret.success, True, "Motor off does not succeeded")
 		self.assertEqual(ret.message, "OFF", "motor off wrong message")
-		with open("/dev/rtmotor0","r") as f:
+		with open("/dev/rtmotoren0","r") as f:
 			data = f.readline()
 			self.assertEqual(data,"0\n","wrong value in rtmotor0 at motor off")
 
