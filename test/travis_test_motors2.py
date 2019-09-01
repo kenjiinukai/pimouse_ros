@@ -16,8 +16,7 @@ class MotorTest(unittest.TestCase):
 
 	def	file_check(self,dev,value,message):
 		with open("/dev/" + dev,"r") as f:
-			s = f.readline()
-			self.assertEqual(s,str(value)+"\n",message)
+			self.assertEqual(f.readline(),str(value)+"\n",message)
 
 	def	test_node_exist(self):
 		nodes = rosnode.get_node_names()
@@ -69,6 +68,5 @@ class MotorTest(unittest.TestCase):
 			self.assertEqual(data,"1\n","wrong value in rtmotor0 at motor on")
 
 if __name__ == '__main__':
-	time.sleep(3)
 	rospy.init_node('travis_test_motors')
 	rostest.rosrun('pimouse_ros','travis_test_motors', MotorTest)
