@@ -9,8 +9,8 @@ from std_srvs.srv import Trigger, TriggerResponse
 
 class MotorTest(unittest.TestCase):
 	def	setUp(self):
-		rospy.wait_for_servise('/motor_on')
-		rospy.wait_for_servise('/morot_off')
+		rospy.wait_for_service('/motor_on')
+		rospy.wait_for_service('/morot_off')
 		on = rospy.ServiseProxy('/motor_on',Trigger)
 		ret = on()
 
