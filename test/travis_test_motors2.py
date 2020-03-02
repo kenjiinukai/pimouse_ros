@@ -10,15 +10,13 @@ from std_srvs.srv import Trigger, TriggerResponse
 class MotorTest(unittest.TestCase):
 	def	setUp(self):
 		rospy.wait_for_service('/motor_on')
-		rospy.wait_for_service('/morot_off')
+		rospy.wait_for_service('/motor_off')
 		on = rospy.ServiceProxy('/motor_on',Trigger)
 		ret = on()
 
 	def	file_check(self,dev,value,message):
 		with open("/dev/" + dev,"r") as f:
-			s = f.readline()
-			self.assertEqual(s,str(value)+"\n",message)
-
+			self.assertEqual(f.readline(),str(value)+"\n",message)
 
 	def	test_node_exist(self):
 		nodes = rosnode.get_node_names()
